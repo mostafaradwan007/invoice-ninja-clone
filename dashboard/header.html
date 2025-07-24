@@ -67,6 +67,10 @@
     .add-column {
       flex: 1;
     }
+    .add-column a{
+      text-decoration: none;
+      color: black;
+    }
 
     .add-menu h6 {
       font-size: 14px;
@@ -142,7 +146,7 @@
 
   <nav class="top-nav">
     <div class="left-group">
-      <span class="dashboard-text">Dashboard</span>
+      <span class="dashboard-text"><?php echo isset($pageTitle) ? $pageTitle : 'Default Title'; ?></span>
 
       <!-- Add Dropdown -->
       <div class="dropdown">
@@ -154,13 +158,13 @@
             <div class="add-column">
               <h6><i class="bi bi-bar-chart-line-fill text-success"></i> Income</h6>
               <ul>
-                <li><i class="bi bi-plus"></i> Client</li>
-                <li><i class="bi bi-plus"></i> Product</li>
-                <li><i class="bi bi-plus"></i> Invoice</li>
-                <li><i class="bi bi-plus"></i> Recurring Invoice</li>
-                <li><i class="bi bi-plus"></i> Quote</li>
-                <li><i class="bi bi-plus"></i> Credit</li>
-                <li><i class="bi bi-plus"></i> Payment</li>
+                <li><i class="bi bi-plus"></i><a href="./clients.php"> Client</a></li>
+                <li><i class="bi bi-plus"></i><a href="./products.php"> Product</a></li>
+                <li><i class="bi bi-plus"></i><a href="#">Invoice</a></li>
+                <li><i class="bi bi-plus"></i><a href="#"> Recurring Invoice</a></li>
+                <li><i class="bi bi-plus"></i><a href="#">Quote</a> </li>
+                <li><i class="bi bi-plus"></i><a href="#"> Credit</a></li>
+                <li><i class="bi bi-plus"></i><a href="#">Payment</a> </li>
               </ul>
             </div>
 

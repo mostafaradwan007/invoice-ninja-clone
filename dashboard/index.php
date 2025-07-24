@@ -45,7 +45,7 @@
   </style>
 </head>
 <body>
-
+ <?php $pageTitle = "Dashboard"; ?>
   <?php include_once './header.html'; ?>
   <?php include_once './sidebar.html'; ?>
 

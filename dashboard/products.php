@@ -11,7 +11,7 @@
 
 </head>
 <body>
-  <?php $pageTitle = "Clients";?>
+ <?php $pageTitle = "Products";?>
 <?php include_once './header.html'; ?>
 <?php include_once './sidebar.html'; ?>
 
@@ -20,7 +20,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clients - Bee Company</title>
+  <title>Products - Bee Company</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -342,7 +342,7 @@
 </head>
 <body>
   <!-- Include your header and sidebar here -->
-   <?php $pageTitle = "Clients";?>
+   <?php $pageTitle = "Products";?>
   <?php include_once './header.html'; ?>
   <?php include_once './sidebar.html'; ?>
 
@@ -355,7 +355,7 @@
           <li class="breadcrumb-item">
             <a href="./index.php"><i class="bi bi-house-door"></i></a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Clients</li>
+          <li class="breadcrumb-item active" aria-current="page">Products</li>
         </ol>
       </nav>
     </div>
@@ -389,12 +389,12 @@
           Import
         </button>
         <button class="new-client-btn" type="button">
-          <a style="text-decoration: none;color: inherit;" href="./client-create.php" class="bi bi-plus">New Client</a>
+          <a style="text-decoration: none;color: inherit;" href="./product-create.php" class="bi bi-plus">New Product</a>
         </button>
       </div>
     </div>
 
-    <!-- Clients Table -->
+    <!-- Product Table -->
     <div class="clients-table-container">
       <table class="clients-table">
         <thead>
@@ -402,14 +402,11 @@
             <th>
               <input type="checkbox" class="table-checkbox" id="selectAll">
             </th>
-            <th class="sortable">Name</th>
-            <th class="sortable">Contact Email</th>
-            <th class="sortable">ID Number</th>
-            <th class="sortable">Balance</th>
-            <th class="sortable">Paid to Date</th>
-            <th class="sortable">Date Created</th>
-            <th class="sortable">Last Login</th>
-            <th class="sortable">Website</th>
+            <th class="sortable">Product</th>
+            <th class="sortable">Notes</th>
+            <th class="sortable">Price</th>
+            <th class="sortable">Default Quantity</th>
+        
           </tr>
         </thead>
         <tbody>

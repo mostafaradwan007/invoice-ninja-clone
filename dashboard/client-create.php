@@ -380,6 +380,7 @@
 </head>
 <body>
   <!-- Include your header and sidebar here -->
+   <?php $pageTitle = "New Clients";?>
   <?php include_once './header.html'; ?>
   <?php include_once './sidebar.html'; ?>
 
