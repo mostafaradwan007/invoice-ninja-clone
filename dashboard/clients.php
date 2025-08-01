@@ -340,8 +340,8 @@
 </head>
 <body>
   <!-- Include your header and sidebar here -->
-  <?php include_once './header.html'; ?>
-  <?php include_once './sidebar.html'; ?>
+  <?php include('./header.html'); ?>
+  <?php include('./sidebar.html'); ?>
 
   <!-- Main Content -->
   <div class="main-content">
@@ -381,7 +381,7 @@
         <button class="filter-btn" type="button">
           Filter
         </button>
-        <button class="import-btn" type="button">
+        <button class="import-btn" type="button"  onclick="window.location.href='./client-import.php'">
           <i class="bi bi-download"></i>
           Import
         </button>

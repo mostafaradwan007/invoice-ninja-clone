@@ -380,8 +380,8 @@
 </head>
 <body>
   <!-- Include your header and sidebar here -->
-  <?php include_once './header.html'; ?>
-  <?php include_once './sidebar.html'; ?>
+  <?php include('./header.html'); ?>
+  <?php include('./sidebar.html'); ?>
 
   <!-- Main Content -->
   <div class="main-content">
