@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet" />
   <style>
     :root {
       --bee-yellow: #ffcc00;
@@ -19,14 +20,19 @@
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
-      padding-left: 280px; /* To make space for the fixed sidebar */
-      padding-top: 70px; /* To make space for the fixed header */
+      padding-left: 280px;
+      /* To make space for the fixed sidebar */
+      padding-top: 70px;
+      /* To make space for the fixed header */
     }
+    
+
 
 
     /* Main Content Area */
     .main-content {
-      padding: 24px; /* Add some padding around the content */
+      padding: 24px;
+      /* Add some padding around the content */
     }
 
     .chart-container {
@@ -34,7 +40,7 @@
       border-radius: 8px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .dashboard-buttons {
@@ -44,10 +50,11 @@
     }
   </style>
 </head>
+
 <body>
 
-  <?php include_once './header.html'; ?>
-  <?php include_once './sidebar.html'; ?>
+  <?php include_once './header.php'; ?>
+  <?php include_once './sidebar.php'; ?>
 
   <!-- Main Content Area -->
   <div class="main-content">
@@ -196,4 +203,5 @@
     });
   </script>
 </body>
+
 </html>
