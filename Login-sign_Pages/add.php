@@ -5,11 +5,10 @@ start_secure_session();
 // Check if user is logged in and has admin privileges
 require_login();
 
-// Optional: Add admin check if needed
-// if (!isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
-//     header("Location: profile.php");
-//     exit;
-// }
+ if (!isset($_SESSION['user']['role']) || $_SESSION['user']['role'] !== 'admin') {
+    header("Location: profile.php");
+    exit;
+ }
 
 $message = "";
 $message_type = "";
@@ -44,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['add'])) {
         $result = register_user($username, $email, $password);
         
         if ($result['success']) {
-            $message = "<div class='alert alert-success text-center'>✔ User added successfully — أشطا 😎</div>";
+            $message = "<div class='alert alert-success text-center'>✅ User added successfully — أشطا 😎</div>";
             $message_type = "success";
             
             // Clear form data on success
@@ -59,6 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['add'])) {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add User | FatoraBee</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="sign.css" />
+</head>
+<body>
 
 <div class="signup-section">
   <div class="form-box shadow-lg">
@@ -102,3 +112,5 @@ setTimeout(function() {
 }, 3000);
 <?php endif; ?>
 </script>
+</body>
+</html>

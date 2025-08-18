@@ -2,9 +2,9 @@
 include("function.php");
 start_secure_session();
 
-// Redirect if already logged in
+// Redirect if already logged in - تم إصلاح التوجيه
 if (is_logged_in()) {
-    header("Location: index.php");
+    header("Location: profile.php");
     exit;
 }
 
@@ -45,8 +45,8 @@ if ($login_attempts >= 5 && (time() - $last_attempt) < 300) { // 5 minutes locko
             $_SESSION['user'] = $user;
             $_SESSION['login_time'] = time();
             
-            // Redirect to profile page
-            header("Location: index.php");
+            // إعادة التوجيه للبروفايل بعد نجاح تسجيل الدخول
+            header("Location: profile.php");
             exit;
         } else {
             // Failed login - increment attempts
@@ -55,6 +55,11 @@ if ($login_attempts >= 5 && (time() - $last_attempt) < 300) { // 5 minutes locko
             $message = "<div class='alert alert-danger text-center mt-3'>❌ Invalid email or password</div>";
         }
     }
+}
+
+// Check for logout success message
+if (isset($_GET['logout']) && $_GET['logout'] === 'success') {
+    $message = "<div class='alert alert-success text-center mt-3'>✅ You have been logged out successfully</div>";
 }
 ?>
 <!DOCTYPE html>

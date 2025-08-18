@@ -50,15 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         $result = register_user($username, $email, $password, $profile_image);
         
         if ($result['success']) {
-            $message = "<div class='alert alert-success text-center mt-3'>✅ " . $result['message'] . "</div>";
-            $message_type = "success";
-            
             // Auto-login after successful registration
             $user = authenticate_user($email, $password);
             if ($user) {
                 $_SESSION['user'] = $user;
-                header("Location: profile.php");
+                $_SESSION['login_time'] = time();
+                
+                // التحويل للـ dashboard بعد التسجيل الناجح
+                header("Location: ../dashboard/index.php");
                 exit;
+            } else {
+                $message = "<div class='alert alert-success text-center mt-3'>✅ " . $result['message'] . " Please login now.</div>";
+                $message_type = "success";
             }
         } else {
             $message = "<div class='alert alert-danger text-center mt-3'>❌ " . $result['message'] . "</div>";
@@ -148,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
   <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
     <div class="d-flex">
-      <div class="toast-body">🎉 Account created successfully!</div>
+      <div class="toast-body">🎉 Account created successfully! Redirecting to dashboard...</div>
       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
@@ -161,6 +164,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 <?php if ($message_type === "success"): ?>
 const successToast = new bootstrap.Toast(document.getElementById('successToast'));
 successToast.show();
+// Auto redirect after showing success message
+setTimeout(function() {
+    window.location.href = '../dashboard/index.php';
+}, 2000);
 <?php endif; ?>
 </script>
 </body>
