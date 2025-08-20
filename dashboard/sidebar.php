@@ -9,7 +9,7 @@ require_once __DIR__ . '/../config.php';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sidebar</title>
+  <title>Enhanced Sidebar | FatoraBee</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 <style>
@@ -18,155 +18,499 @@ require_once __DIR__ . '/../config.php';
     --bee-black: #1a1a1a;
     --bee-dark-gray: #333;
     --bee-light: #fff8e1;
+    --bee-hover: #2a2a2a;
+    --bee-accent: #ffd700;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f5f5f5;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    overflow-x: hidden;
   }
 
-  /* Sidebar */
+  /* Main Sidebar Container */
   .sidebar {
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
     width: 280px;
-    background-color: var(--bee-black);
-    padding: 20px 16px;
+    background: linear-gradient(180deg, var(--bee-black) 0%, #252525 100%);
+    padding: 0;
     overflow-y: auto;
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+      4px 0 20px rgba(0, 0, 0, 0.15),
+      inset -1px 0 0 rgba(255, 204, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
   }
 
-  .sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 14px;
-    color: var(--bee-yellow);
-    text-decoration: none;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: background-color 0.3s, color 0.3s;
+  .sidebar::-webkit-scrollbar {
+    width: 6px;
   }
 
-
-  .sidebar-item.active {
-    background-color: var(--bee-yellow);
-    color: var(--bee-black);
+  .sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
   }
 
-  .sidebar-item i {
-    width: 24px;
-    margin-right: 14px;
-    font-size: 18px;
+  .sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--bee-yellow), var(--bee-accent));
+    border-radius: 10px;
   }
 
-  .sidebar-item .plus-icon {
-    margin-left: auto;
-    font-size: 14px;
-    opacity: 0.8;
-  }
-
-  .sidebar-bottom-icons {
-    position: sticky;
-    bottom: 0;
-    background-color: var(--bee-black);
-    padding: 16px 0;
-    border-top: 1px solid #444;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: auto;
-  }
-
-  .sidebar-bottom-icons a {
-    color: var(--bee-yellow);
-    font-size: 20px;
-    text-decoration: none;
-  }
-
-  .sidebar-bottom-icons a:hover {
-    color: var(--bee-light);
-  }
-
+  /* Company Dropdown Section */
   .company-dropdown-container {
-    padding-bottom: 16px;
-    border-bottom: 1px solid #444;
-    margin-bottom: 20px;
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .company-dropdown-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bee-yellow), transparent);
   }
 
   .company-dropdown-toggle {
     display: flex;
     align-items: center;
-    background-color: var(--bee-black);
+    background: rgba(255, 255, 255, 0.05);
+   backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
     color: var(--bee-yellow);
-    padding: 10px 14px;
-    border-radius: 8px;
+    padding: 14px 16px;
+    border-radius: 12px;
     text-decoration: none;
     font-size: 15px;
     font-weight: 600;
     width: 100%;
     justify-content: space-between;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 204, 0, 0.2);
   }
 
   .company-dropdown-toggle:hover {
-    background-color: #2a2a2a;
+    background: rgba(255, 204, 0, 0.1);
     color: var(--bee-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2);
   }
 
   .company-dropdown-menu {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    background-color: #fffbe6;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #fffbe6 0%, #fff3c4 100%);
     font-size: 14px;
+    border: none;
+   backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
   }
 
   .company-dropdown-menu .dropdown-item {
-    padding: 12px 16px;
-    transition: background-color 0.2s;
-    color: #222;
+    padding: 14px 18px;
+    transition: all 0.2s ease;
+    color: #2d3748;
+    border-radius: 8px;
+    margin: 4px 8px;
   }
 
   .company-dropdown-menu .dropdown-item:hover {
-    background-color: #fff1a8;
+    background: linear-gradient(135deg, var(--bee-yellow), var(--bee-accent));
+    color: var(--bee-black);
+    transform: translateX(4px);
   }
 
-  .company-dropdown-menu .small {
-    font-size: 12px;
-    color: #555;
+  /* Navigation Items */
+  .sidebar-nav {
+    padding: 0 16px;
   }
 
-  .company-dropdown-menu .fw-medium {
-    font-weight: 600;
-  }
-
-  .company-dropdown-menu .text-truncate {
-    white-space: nowrap;
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    color: #94a3b8;
+    text-decoration: none;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
     overflow: hidden;
-    text-overflow: ellipsis;
-
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  .sidebar-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--bee-yellow), var(--bee-accent));
+    transition: width 0.3s ease;
+    border-radius: 0 12px 12px 0;
+  }
 
-.sidebar-item.active {
-  background-color: var(--bee-yellow);
-  color: var(--bee-black);
-}
+  .sidebar-item:hover::before {
+    width: 4px;
+  }
 
+  .sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--bee-yellow);
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
 
+  .sidebar-item.active {
+    background: linear-gradient(135deg, var(--bee-yellow), var(--bee-accent));
+    color: var(--bee-black);
+    font-weight: 600;
+    box-shadow: 
+      0 4px 15px rgba(255, 204, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-item.active::before {
+    width: 0;
+  }
+
+  .sidebar-item i {
+    width: 20px;
+    margin-right: 12px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .plus-icon {
+    margin-left: auto;
+    font-size: 12px;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-item:hover .plus-icon {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+
+  /* Bottom Icons Section */
+  .sidebar-bottom-icons {
+    position: sticky;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, var(--bee-black) 100%);
+   backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
+    padding: 20px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sidebar-bottom-icons::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bee-yellow), transparent);
+  }
+
+  .sidebar-bottom-icons a {
+    color: #64748b;
+    font-size: 18px;
+    text-decoration: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sidebar-bottom-icons a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--bee-yellow), var(--bee-accent));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+  }
+
+  .sidebar-bottom-icons a:hover::before {
+    opacity: 0.1;
+  }
+
+  .sidebar-bottom-icons a:hover {
+    color: var(--bee-yellow);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+  }
+
+  .sidebar-bottom-icons a i {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Info Popup Enhanced */
+  .info-popup {
+    position: fixed;
+    bottom: 90px;
+    left: 20px;
+    width: 320px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+    backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    border-radius: 16px;
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    padding: 24px;
+    z-index: 1050;
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .info-popup.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+  }
+
+  .popup-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .user-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bee-yellow), var(--bee-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    color: var(--bee-black);
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3);
+    position: relative;
+  }
+
+  .user-avatar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--bee-yellow), var(--bee-accent), var(--bee-yellow));
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+  }
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .user-name, .user-email {
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+
+  .user-name {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .user-email {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .social-links a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 204, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 204, 0, 0.2);
+  }
+
+  .social-links a:hover {
+    background: var(--bee-yellow);
+    color: var(--bee-black);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+  }
+
+  .popup-footer {
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 204, 0, 0.2);
+  }
+
+  .popup-footer small {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    color: #64748b;
+    font-size: 16px;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
+  }
+
+  .close-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+  }
+
+  /* Tooltip Enhanced */
+  .tooltip-custom {
+    position: relative;
+  }
+
+  .tooltip-custom::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 26, 26, 0.9);
+    color: var(--bee-yellow);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+  }
+
+  .tooltip-custom::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: rgba(26, 26, 26, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .tooltip-custom:hover::after,
+  .tooltip-custom:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-2px);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      transform: translateX(-100%);
+    }
+    
+    .sidebar.mobile-open {
+      transform: translateX(0);
+    }
+  }
+
+  /* Loading Animation */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .loading {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Smooth Transitions */
+  * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
 </style>
 
 </head>
 <body>
-  <!-- Sidebar -->
+  <!-- Enhanced Sidebar -->
   <nav class="sidebar">
+    <!-- Company Dropdown Section -->
     <div class="company-dropdown-container">
       <div class="dropdown">
         <a href="#" class="company-dropdown-toggle" id="companyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <span>Bee Company</span>
+          <span>🐝 Bee Company</span>
           <i class="bi bi-chevron-expand ms-auto"></i>
         </a>
         <ul class="dropdown-menu company-dropdown-menu" aria-labelledby="companyDropdown">
@@ -194,127 +538,454 @@ require_once __DIR__ . '/../config.php';
       </div>
     </div>
 
-    <a href="<?php echo BASE_URL; ?>index.php" class="sidebar-item">
-      <i class="bi bi-house-door-fill"></i>
-      Dashboard
-    </a>
-    <a href="<?php echo BASE_URL; ?>clients/clients.php" class="sidebar-item">
-      <i class="bi bi-people"></i>
-      Clients
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>products/products.php" class="sidebar-item">
-      <i class="bi bi-bag"></i>
-      Products
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>invoices/invoice.php" class="sidebar-item">
-      <i class="bi bi-file-earmark-text"></i>
-      Invoices
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>recurring-invoices/recurring-invoices.php" class="sidebar-item">
-      <i class="bi bi-arrow-repeat"></i>
-      Recurring Invoices
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>payments/payments.php" class="sidebar-item">
-      <i class="bi bi-credit-card"></i>
-      Payments
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>quotes/quote.php" class="sidebar-item">
-      <i class="bi bi-file-text"></i>
-      Quotes
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>credits/credits.php" class="sidebar-item">
-      <i class="bi bi-journal-text"></i>
-      Credits
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>projects/projects.php" class="sidebar-item">
-      <i class="bi bi-briefcase"></i>
-      Projects
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>tasks/tasks.php" class="sidebar-item">
-      <i class="bi bi-check2-square"></i>
-      Tasks
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>vendors/vendors.php" class="sidebar-item">
-      <i class="bi bi-building"></i>
-      Vendors
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>purchase orders/purchase-orders.php" class="sidebar-item">
-      <i class="bi bi-clipboard-check"></i>
-      Purchase Orders
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="<?php echo BASE_URL; ?>expenses/expenses.php" class="sidebar-item">
-      <i class="bi bi-wallet2"></i>
-      Expenses
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="#" class="sidebar-item">
-      <i class="bi bi-arrow-repeat"></i>
-      Recurring Expenses
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="#" class="sidebar-item">
-      <i class="bi bi-arrow-up-arrow-down"></i>
-      Transactions
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="#" class="sidebar-item">
-      <i class="bi bi-graph-up"></i>
-      Reports
-      <i class="bi bi-plus plus-icon"></i>
-    </a>
-    <a href="#" class="sidebar-item">
-      <i class="bi bi-gear"></i>
-      Settings
-    </a>
+    <!-- Navigation Items -->
+    <div class="sidebar-nav">
+      <a href="./index.php" class="sidebar-item">
+        <i class="bi bi-house-door-fill"></i>
+        Dashboard
+      </a>
+      <a href="./clients.php" class="sidebar-item">
+        <i class="bi bi-people"></i>
+        Clients
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./products.php" class="sidebar-item">
+        <i class="bi bi-bag"></i>
+        Products
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./invoice.php" class="sidebar-item">
+        <i class="bi bi-file-earmark-text"></i>
+        Invoices
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./recurring-invoices.php" class="sidebar-item">
+        <i class="bi bi-arrow-repeat"></i>
+        Recurring Invoices
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-credit-card"></i>
+        Payments
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-file-text"></i>
+        Quotes
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-journal-text"></i>
+        Credits
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-briefcase"></i>
+        Projects
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-check2-square"></i>
+        Tasks
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-building"></i>
+        Vendors
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-clipboard-check"></i>
+        Purchase Orders
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="#" class="sidebar-item">
+        <i class="bi bi-wallet2"></i>
+        Expenses
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./recurring-expenses.php" class="sidebar-item">
+        <i class="bi bi-arrow-repeat"></i>
+        Recurring Expenses
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./transactions.php" class="sidebar-item">
+        <i class="bi bi-arrow-up-arrow-down"></i>
+        Transactions
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./reports.php" class="sidebar-item">
+        <i class="bi bi-graph-up"></i>
+        Reports
+        <i class="bi bi-plus plus-icon"></i>
+      </a>
+      <a href="./settings.php" class="sidebar-item">
+        <i class="bi bi-gear"></i>
+        Settings
+      </a>
+    </div>
 
+    <!-- Enhanced Bottom Icons -->
     <div class="sidebar-bottom-icons">
-      <a href="#"><i class="bi bi-envelope"></i></a>
-      <a href="#"><i class="bi bi-chat-dots"></i></a>
-      <a href="#"><i class="bi bi-question-circle"></i></a>
-      <a href="#"><i class="bi bi-info-circle"></i></a>
-      <a href="#"><i class="bi bi-moon"></i></a>
-      <a href="#"><i class="bi bi-box-arrow-in-right"></i></a>
+      <a href="#" class="tooltip-custom" data-tooltip="Messages">
+        <i class="bi bi-envelope"></i>
+      </a>
+      <a href="#" class="tooltip-custom" data-tooltip="Chat">
+        <i class="bi bi-chat-dots"></i>
+      </a>
+      <a href="#" class="tooltip-custom" data-tooltip="Help">
+        <i class="bi bi-question-circle"></i>
+      </a>
+      <a href="#" class="tooltip-custom" data-tooltip="Info" id="infoIcon">
+        <i class="bi bi-info-circle"></i>
+      </a>
+      <a href="#" class="tooltip-custom" data-tooltip="Dark Mode">
+        <i class="bi bi-moon"></i>
+      </a>
+      <a href="#" class="tooltip-custom" data-tooltip="Logout">
+        <i class="bi bi-box-arrow-in-right"></i>
+      </a>
     </div>
   </nav>
+
+  <!-- Enhanced Info Popup -->
+  <div class="info-popup" id="infoPopup">
+    <button class="close-btn" id="closePopup">
+      <i class="bi bi-x"></i>
+    </button>
+    
+    <div class="popup-header">
+      <div class="user-avatar">
+        MR
+      </div>
+      <div class="user-name">Mostafa Radwan</div>
+      <div class="user-email">developer@fatorabee.com</div>
+    </div>
+
+   <div class="social-links">
+  <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="tooltip-custom" data-tooltip="Facebook">
+    <i class="bi bi-facebook"></i>
+  </a>
+  <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer" class="tooltip-custom" data-tooltip="Twitter">
+    <i class="bi bi-twitter"></i>
+  </a>
+  <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="tooltip-custom" data-tooltip="LinkedIn">
+    <i class="bi bi-linkedin"></i>
+  </a>
+  <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="tooltip-custom" data-tooltip="Instagram">
+    <i class="bi bi-instagram"></i>
+  </a>
+  <a href="https://www.github.com/" target="_blank" rel="noopener noreferrer" class="tooltip-custom" data-tooltip="GitHub">
+    <i class="bi bi-github"></i>
+  </a>
+</div>
+
+
+    <div class="popup-footer">
+      <small>🐝 FatoraBee Dashboard v2.5 | Made with ❤️</small>
+    </div>
+  </div>
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const sidebarItems = document.querySelectorAll('.sidebar-item');
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebarItems = document.querySelectorAll('.sidebar-item');
+      const infoIcon = document.getElementById('infoIcon');
+      const infoPopup = document.getElementById('infoPopup');
+      const closePopup = document.getElementById('closePopup');
 
-    // أولاً: فعل العنصر المحفوظ من قبل
-    const lastActiveText = localStorage.getItem('activeSidebarText');
-    if (lastActiveText) {
-      const lastActiveItem = Array.from(sidebarItems).find(item =>
-        item.textContent.trim() === lastActiveText
-      );
-      if (lastActiveItem) {
-        lastActiveItem.classList.add('active');
+      // Preserve active sidebar functionality
+      const lastActiveText = localStorage.getItem('activeSidebarText');
+      if (lastActiveText) {
+        const lastActiveItem = Array.from(sidebarItems).find(item =>
+          item.textContent.trim() === lastActiveText
+        );
+        if (lastActiveItem) {
+          lastActiveItem.classList.add('active');
+        }
       }
-    }
 
-    // ثانياً: لما يضغط المستخدم على أي عنصر، خزّن النص الداخلي بدل href
-    sidebarItems.forEach(item => {
-      item.addEventListener('click', () => {
-        localStorage.setItem('activeSidebarText', item.textContent.trim());
+      // Enhanced info popup functionality
+      infoIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        infoPopup.classList.toggle('show');
+        
+        // Add subtle animation to the icon
+        this.style.transform = infoPopup.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+
+      // Close popup functionality
+      closePopup.addEventListener('click', function(e) {
+        e.preventDefault();
+        infoPopup.classList.remove('show');
+        infoIcon.style.transform = 'rotate(0deg)';
+      });
+
+      // Close popup when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!infoPopup.contains(e.target) && !infoIcon.contains(e.target)) {
+          infoPopup.classList.remove('show');
+          infoIcon.style.transform = 'rotate(0deg)';
+        }
+      });
+
+      // Close popup with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          infoPopup.classList.remove('show');
+          infoIcon.style.transform = 'rotate(0deg)';
+        }
+      });
+
+      // Preserve sidebar click functionality
+      sidebarItems.forEach(item => {
+        item.addEventListener('click', () => {
+          localStorage.setItem('activeSidebarText', item.textContent.trim());
+          
+          // Remove active class from all items
+          sidebarItems.forEach(i => i.classList.remove('active'));
+          
+          // Add active class to clicked item
+          item.classList.add('active');
+        });
+      });
+
+      // Enhanced hover effects for plus icons
+      sidebarItems.forEach(item => {
+        const plusIcon = item.querySelector('.plus-icon');
+        if (plusIcon) {
+          item.addEventListener('mouseenter', () => {
+            plusIcon.style.color = 'inherit';
+            plusIcon.style.transform = 'rotate(90deg) scale(1.2)';
+          });
+          
+          item.addEventListener('mouseleave', () => {
+            if (!item.classList.contains('active')) {
+              plusIcon.style.transform = 'rotate(0deg) scale(1)';
+            }
+          });
+        }
+      });
+
+      // Smooth scroll for sidebar
+      const sidebar = document.querySelector('.sidebar');
+      let isScrolling = false;
+      
+      sidebar.addEventListener('scroll', function() {
+        if (!isScrolling) {
+          window.requestAnimationFrame(function() {
+            // Add subtle shadow effect during scroll
+            if (sidebar.scrollTop > 50) {
+              sidebar.style.boxShadow = '4px 0 20px rgba(0, 0, 0, 0.25), inset -1px 0 0 rgba(255, 204, 0, 0.1)';
+            } else {
+              sidebar.style.boxShadow = '4px 0 20px rgba(0, 0, 0, 0.15), inset -1px 0 0 rgba(255, 204, 0, 0.1)';
+            }
+            isScrolling = false;
+          });
+        }
+        isScrolling = true;
+      });
+
+      // Loading animation for navigation items
+      sidebarItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-20px)';
+        
+        setTimeout(() => {
+          item.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+          item.style.opacity = '1';
+          item.style.transform = 'translateX(0)';
+        }, index * 50);
       });
     });
-  });
-</script>
 
+    // Mobile sidebar toggle (optional enhancement)
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('mobile-open');
+    }
 
+    // Add ripple effect to sidebar items
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        // Create ripple element
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 204, 0, 0.3)';
+        ripple.style.pointerEvents = 'none';
+        ripple.style.animation = 'ripple-animation 0.6s ease-out';
+        
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+        
+        // Remove ripple after animation
+        setTimeout(() => {
+          if (ripple.parentNode) {
+            ripple.parentNode.removeChild(ripple);
+          }
+        }, 600);
+      });
+    });
 
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple-animation {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
 
+    // Enhanced scroll behavior for mobile
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden';
+      const sidebar = document.querySelector('.sidebar');
+      
+      // Add mobile overlay
+      const overlay = document.createElement('div');
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      `;
+      document.body.appendChild(overlay);
+      
+      // Show/hide overlay with sidebar
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class') {
+            if (sidebar.classList.contains('mobile-open')) {
+              overlay.style.opacity = '1';
+              overlay.style.visibility = 'visible';
+            } else {
+              overlay.style.opacity = '0';
+              overlay.style.visibility = 'hidden';
+            }
+          }
+        });
+      });
+      
+      observer.observe(sidebar, { attributes: true });
+      
+      // Close sidebar when clicking overlay
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('mobile-open');
+      });
+    }
+
+    // Performance optimization: Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.sidebar-item, .user-avatar').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      const activeItem = document.querySelector('.sidebar-item.active');
+      const items = Array.from(document.querySelectorAll('.sidebar-item'));
+      const currentIndex = items.indexOf(activeItem);
+
+      switch(e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          const nextIndex = (currentIndex + 1) % items.length;
+          items[nextIndex].focus();
+          items[nextIndex].click();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          const prevIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+          items[prevIndex].focus();
+          items[prevIndex].click();
+          break;
+        case 'Enter':
+        case ' ':
+          if (document.activeElement.classList.contains('sidebar-item')) {
+            e.preventDefault();
+            document.activeElement.click();
+          }
+          break;
+      }
+    });
+
+    // Add focus styles for accessibility
+    const accessibilityStyles = document.createElement('style');
+    accessibilityStyles.textContent = `
+      .sidebar-item:focus {
+        outline: 2px solid var(--bee-yellow);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.2);
+      }
+
+      .sidebar-item:focus-visible {
+        outline: 2px solid var(--bee-yellow);
+        outline-offset: 2px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .info-popup {
+          background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(37, 37, 37, 0.95));
+          color: #e2e8f0;
+        }
+        
+        .user-name, .user-email {
+          color: #e2e8f0;
+        }
+        
+        .popup-footer small {
+          color: #94a3b8;
+        }
+      }
+    `;
+    document.head.appendChild(accessibilityStyles);
+
+    console.log('🐝 Enhanced FatoraBee Sidebar loaded successfully!');
+  </script>
 </body>
 </html>
-
