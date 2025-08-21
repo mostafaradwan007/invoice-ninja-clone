@@ -1,11 +1,18 @@
+{{-- resources/views/dashboard/index.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
+  
+  {{-- Bootstrap CSS --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  
+  {{-- Custom CSS --}}
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  
   <style>
     :root {
       --bee-yellow: #ffcc00;
@@ -19,14 +26,12 @@
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
-      padding-left: 280px; /* To make space for the fixed sidebar */
-      padding-top: 70px; /* To make space for the fixed header */
+      padding-left: 280px; /* To make space for sidebar */
+      padding-top: 70px; /* To make space for header */
     }
 
-
-    /* Main Content Area */
     .main-content {
-      padding: 24px; /* Add some padding around the content */
+      padding: 24px;
     }
 
     .chart-container {
@@ -46,29 +51,29 @@
 </head>
 <body>
 
-  <?php include_once './header.html'; ?>
-  <?php include_once './sidebar.html'; ?>
+  {{-- Header & Sidebar --}}
+  @include('includes.header')
+  @include('includes.sidebar')
 
-  <?php
-if (session('success')) {
-    echo '<div class="alert alert-success">'.session('success').'</div>';
-    session()->forget('success');
-}
-?>
+  {{-- Session Alerts --}}
+  @if(session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+  @endif
 
-
-  <!-- Main Content Area -->
+  {{-- Main Content Area --}}
   <div class="main-content">
     <h2 class="mb-4">Dashboard Overview</h2>
 
-    <!-- Example Buttons -->
+    {{-- Buttons --}}
     <div class="dashboard-buttons">
       <button class="btn btn-primary">View Reports</button>
       <button class="btn btn-success">Add New Data</button>
       <button class="btn btn-info">Export Data</button>
     </div>
 
-    <!-- Charts Section -->
+    {{-- Charts --}}
     <div class="row">
       <div class="col-lg-6">
         <div class="chart-container">
@@ -93,7 +98,7 @@ if (session('success')) {
       </div>
     </div>
 
-    <!-- You can add more content here, e.g., data tables, cards, etc. -->
+    {{-- Recent Activity --}}
     <div class="card mt-4">
       <div class="card-body">
         <h5 class="card-title">Recent Activity</h5>
@@ -105,14 +110,14 @@ if (session('success')) {
         </ul>
       </div>
     </div>
-
   </div>
 
+  {{-- JS --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{{ asset('js/script.js') }}"></script> {{-- لو عندك JS خاص --}}
+  
   <script>
-    // JavaScript for Chart.js Charts
     document.addEventListener('DOMContentLoaded', function() {
       // Sales Chart
       const salesCtx = document.getElementById('salesChart').getContext('2d');
@@ -128,24 +133,16 @@ if (session('success')) {
             borderWidth: 1
           }]
         },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
       });
 
-      // Expense Chart (Doughnut)
+      // Expense Chart
       const expenseCtx = document.getElementById('expenseChart').getContext('2d');
       new Chart(expenseCtx, {
         type: 'doughnut',
         data: {
           labels: ['Rent', 'Utilities', 'Salaries', 'Marketing', 'Supplies'],
           datasets: [{
-            label: 'Expenses',
             data: [300, 50, 200, 100, 80],
             backgroundColor: [
               'rgba(255, 99, 132, 0.6)',
@@ -164,21 +161,10 @@ if (session('success')) {
             borderWidth: 1
           }]
         },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: false,
-              text: 'Expense Breakdown'
-            }
-          }
-        }
+        options: { responsive: true }
       });
 
-      // Monthly Revenue Chart (Line)
+      // Revenue Chart
       const revenueCtx = document.getElementById('revenueChart').getContext('2d');
       new Chart(revenueCtx, {
         type: 'line',
@@ -192,14 +178,7 @@ if (session('success')) {
             tension: 0.1
           }]
         },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
       });
     });
   </script>
