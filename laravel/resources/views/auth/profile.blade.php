@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Profile | FatoraBee</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="{{ asset('profile.css') }}" />
   <script src="https://kit.fontawesome.com/yourFontAwesomeKit.js" crossorigin="anonymous"></script>
 </head>
 <body class="theme-light">
@@ -28,7 +28,8 @@
         @endif
 
         <div class="d-flex align-items-center mb-4">
-          <img src="{{ Auth::user()->profile_image ? asset('storage/'.Auth::user()->profile_image) : 'https://i.pravatar.cc/100?img=12' }}" class="rounded-circle me-4 profile-img" alt="User Photo">
+          <img src="{{ Auth::user()->profile_image ? asset('storage/'.Auth::user()->profile_image) : 'https://i.pravatar.cc/100?img=12' }}" 
+               class="rounded-circle me-4 profile-img" alt="User Photo">
           <div>
             <h4 class="mb-1">{{ Auth::user()->name }}</h4>
             <p class="text-muted mb-1">{{ Auth::user()->email }}</p>
@@ -67,8 +68,9 @@
 
             <hr>
             <h5>Update Profile Information</h5>
-            <form method="POST" enctype="multipart/form-data" class="mt-3">
+            <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-3">
               @csrf
+              @method('PUT')
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Username</label>
@@ -86,7 +88,7 @@
                 <input type="file" name="profile_image" class="form-control" accept="image/jpeg,image/jpg,image/png,image/gif">
                 <div class="form-text">Max size: 5MB. Formats: JPG, PNG, GIF</div>
               </div>
-              <button type="submit" name="update" class="btn btn-warning me-2">
+              <button type="submit" class="btn btn-warning me-2">
                 <i class="fas fa-edit me-2"></i>Update Profile
               </button>
             </form>
@@ -95,8 +97,9 @@
           <!-- Security Tab -->
           <div class="tab-pane fade" id="security">
             <h5>Change Password</h5>
-            <form method="POST" class="mt-3">
+            <form method="POST" action="{{ route('profile.password') }}" class="mt-3">
               @csrf
+              @method('PUT')
               <div class="mb-3">
                 <label class="form-label">Current Password</label>
                 <input type="password" name="current_password" class="form-control" required>
@@ -108,9 +111,9 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Confirm New Password</label>
-                <input type="password" name="confirm_new_password" class="form-control" required>
+                <input type="password" name="new_password_confirmation" class="form-control" required>
               </div>
-              <button type="submit" name="change_password" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary">
                 <i class="fas fa-key me-2"></i>Change Password
               </button>
             </form>
@@ -119,13 +122,14 @@
             <div class="bg-light p-3 rounded">
               <h5 class="text-danger">Danger Zone</h5>
               <p class="text-muted">Once you delete your account, there is no going back. Please be certain.</p>
-              <form method="POST" onsubmit="return confirmDelete()">
+              <form method="POST" action="{{ route('profile.destroy') }}" onsubmit="return confirmDelete()">
                 @csrf
+                @method('DELETE')
                 <div class="mb-3">
                   <label class="form-label">Type <strong>DELETE</strong> to confirm:</label>
                   <input type="text" name="confirm_delete" class="form-control" placeholder="DELETE" required>
                 </div>
-                <button type="submit" name="delete" class="btn btn-danger">
+                <button type="submit" class="btn btn-danger">
                   <i class="fas fa-trash me-2"></i>Delete Account Permanently
                 </button>
               </form>
@@ -179,9 +183,12 @@
             </div>
             
             <hr>
-            <a href="?logout=1" class="btn btn-outline-danger">
-              <i class="fas fa-sign-out-alt me-2"></i>Logout
-            </a>
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <button type="submit" class="btn btn-outline-danger">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -189,7 +196,7 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="profile.js"></script>
+  <script src="{{ asset('profile.js') }}"></script>
   <script>
     function confirmDelete() {
       return confirm('Are you absolutely sure you want to delete your account? This action cannot be undone!');

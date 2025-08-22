@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 // صفحة التسجيل
 Route::get('/signup', [AuthController::class, 'showSignup'])->name('signup');
@@ -18,10 +19,6 @@ Route::get('/dashboard', function () {
 
 // تسجيل الخروج
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('/profile', function () {
-    return view('auth.profile'); // ده هيقرأ profile.blade.php
-})->name('profile')->middleware('auth'); // middleware عشان يكون بس للمسجلين
 
 Route::get('/', function () {
     return view('home');
@@ -55,3 +52,23 @@ Route::get('/how-it-works', function () {
 Route::get('/dashboard', function () {
     return view('dashboard.index'); // index.blade.php جوه resources/views/dashboard
 })->middleware('auth')->name('dashboard');
+
+// صفحة البروفايل (GET لعرضها)
+Route::get('/profile', [ProfileController::class, 'edit'])
+    ->name('profile')
+    ->middleware('auth');
+
+// تحديث بيانات البروفايل (PUT)
+Route::put('/profile', [ProfileController::class, 'update'])
+    ->name('profile.update')
+    ->middleware('auth');
+
+// تغيير كلمة المرور (PUT)
+Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
+    ->name('profile.password')
+    ->middleware('auth');
+
+// حذف الحساب (DELETE)
+Route::delete('/profile', [ProfileController::class, 'destroy'])
+    ->name('profile.destroy')
+    ->middleware('auth');
